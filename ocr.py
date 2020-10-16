@@ -1,3 +1,6 @@
+'''
+取消使用列表pop方法，直接判断是否为输出文档之后continue
+'''
 # encoding:utf-8
 import requests
 import base64
@@ -64,6 +67,7 @@ def ocr(localfile):
     获取Access Token
     '''
     # encoding:utf-8
+
     ak = '[请输入在百度API获取的ak(通用文字识别)]'
     sk = '[请输入在百度API获取的sk(通用文字识别)]'
     # client_id 为官网获取的AK， client_secret 为官网获取的SK
@@ -115,19 +119,20 @@ file_list = []
 #用来存放所有的目录路径
 dir_list = []
 get_file_path(root_path,file_list,dir_list)
-file_list.pop(0)
 fl=open(outputtext,'w')
 print('==========')
 print('M-N-H  OCR')
 print('启动时间:'+time.asctime( time.localtime(time.time()) ))
-print('共找到文件数:'+str(len(file_list)))
+print('共找到文件数:'+str(int(len(file_list)) - 1))
 print('==========')
 textlist.append('==========')
 textlist.append('M-N-H  OCR')
 textlist.append('启动时间:'+time.asctime( time.localtime(time.time()) ))
-textlist.append('共找到文件数:'+str(len(file_list)))
+textlist.append('共找到文件数:'+str(int(len(file_list) - 1)))
 textlist.append('==========')
 for path in file_list:
+    if path == "C:\\MonianHello\\list.txt":
+        continue
     try:
         #transimg(path)
         ocr(path)
